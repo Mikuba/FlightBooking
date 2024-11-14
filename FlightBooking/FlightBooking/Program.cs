@@ -14,7 +14,7 @@ FlightDiscount discount2 = new FlightDiscountBirthday();
 
 tenant.AddDiscountToFlight("KLM12345ABC", discount1);
 tenant.AddDiscountToFlight("KLM12345ABC", discount2);
-tenant.Purchase("KLM12345ABC");
+tenant.Purchase("KLM12345ABC ");
 
 
 
