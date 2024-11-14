@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FlightBooking.Model;
 using FlightBooking.Model.Interfaces;
@@ -22,7 +23,7 @@ namespace FlightBooking
 		public string TravellerLastName { get; set; }
 		public DateTime TravellerBirthDate { get; set; }
 
-		public IEnumerable<FlightDiscount> Discounts { get; set; }
+		public List<IFlightDiscount> Discounts { get; set; }
 
 		public Flight(string flightId, string fromAirportCode, string toAirportCode, DateTime flightDateTime, decimal price, DateTime travellerBirthDate
 		)
@@ -33,16 +34,39 @@ namespace FlightBooking
 			FlighDateTime = flightDateTime;
 			Price = price;
 			TravellerBirthDate = travellerBirthDate;
-			Discounts = new List<FlightDiscount>();
+			Discounts = new List<IFlightDiscount>();
 		}
 
 
-		internal void ApplyDiscount(IFlightDiscount discount, bool saveDiscountCriteria)
+		internal void ApplyDiscount(IFlightDiscount discount)
 		{
-			Price = Price - discount.Amount;
-			if (saveDiscountCriteria)
-				Discounts.Append(discount);
+			if (discount.CanApply(this))
+			{
+				Price = Price - discount.Amount;
+				Discounts.Add(discount);
+			}
+		}
+
+		internal void Validate()
+		{
+			if (!Regex.Match(FlightId.ToUpper(), @"^[A-Z]{3}\d{5}[A-Z]{3}$").Success)
+			{
+				throw new Exception("Flight number is not in correct format");
+			}
+
+			if (FlighDateTime < DateTime.Today)
+			{
+				throw new Exception("FLights in the past are not allowed");
+			}
+
+			if (TravellerBirthDate > DateTime.Today)
+			{
+				throw new Exception("Traveller not born yet");
+			}
+
+			//Validate airport codes 
 
 		}
+
 	}
 }

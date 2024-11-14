@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FlightBooking.Model;
 using FlightBooking.Model.Interfaces;
@@ -22,33 +23,33 @@ namespace FlightBooking
 
 		public void AddFlight(Flight flight)
 		{
-			//ValidateFlight
+			try
+			{
+				flight.Validate();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 			Flights.Add(flight);
 		}
 
-		public void AddDiscountToFlight(string flightId, IFlightDiscount discount)
-		{
-			Flight? flight = Flights.FirstOrDefault(x => x.FlightId == flightId);
-			if (flight != null)
-			{
-				if (discount.CanApply(flight))
-				{
-					flight.ApplyDiscount(discount, tenantGroup == TenantGroupEnum.GroupA);
-				}
-			}
-		}
 
 		public void Purchase(string flightId)
 		{
-			Flight? flight = Flights.FirstOrDefault(x => x.FlightId == flightId);
+			Flight? flight = Flights.FirstOrDefault(x => x.FlightId.Trim() == flightId.Trim());
 			if (flight == null)
 			{
 				throw new Exception("No flight with this number");
 			}
+
+			if (tenantGroup == TenantGroupEnum.GroupA)
+			{
+				//clear list of discounts so they do not get saved
+				flight.Discounts = new List<IFlightDiscount>();
+			}
 			//Save(flight)
-
 		}
-
-
 	}
 }
