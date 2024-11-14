@@ -56,7 +56,7 @@ namespace FlightBooking
 
 			if (FlighDateTime < DateTime.Today)
 			{
-				throw new Exception("FLights in the past are not allowed");
+				throw new Exception("Flights in the past are not allowed");
 			}
 
 			if (TravellerBirthDate > DateTime.Today)
