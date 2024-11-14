@@ -33,7 +33,7 @@ namespace FlightBooking.Model
 			return true;
 		}
 
-		bool IsPriceAboveMinimum(Flight? flight)
+		public bool IsPriceAboveMinimum(Flight? flight)
 		{
 			return flight.Price - amount >= 20;
 		}
