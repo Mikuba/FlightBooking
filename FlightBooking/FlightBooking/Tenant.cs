@@ -49,7 +49,10 @@ namespace FlightBooking
 				//clear list of discounts so they do not get saved
 				flight.Discounts = new List<IFlightDiscount>();
 			}
+			//Calll to API tp save a flight
+
 			//Save(flight)
+			//The discounts are recognised by typeof(discount) which then can be mapped to database value 
 		}
 	}
 }

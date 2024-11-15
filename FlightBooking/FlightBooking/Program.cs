@@ -14,9 +14,6 @@ flight.ApplyDiscount(discount1);
 flight.ApplyDiscount(discount2);
 tenant.AddFlight(flight);
 
-
-//tenant.AddDiscountToFlight("KLM12345ABC", discount1);
-//tenant.AddDiscountToFlight("KLM12345ABC", discount2);
 tenant.Purchase("KLM12345ABC ");
 
 
