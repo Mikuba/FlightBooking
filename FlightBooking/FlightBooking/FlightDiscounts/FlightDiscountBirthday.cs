@@ -11,9 +11,6 @@ namespace FlightBooking.Model.FlightDiscounts
 	{
 		public override bool DoCriteriaMatch(Flight flight)
 		{
-			int month = flight.TravellerBirthDate.Month;
-			int day = flight.TravellerBirthDate.Day;
-
 			return flight.TravellerBirthDate.Month == flight.FlighDateTime.Month &&
 				   flight.TravellerBirthDate.Day == flight.FlighDateTime.Day;
 		}

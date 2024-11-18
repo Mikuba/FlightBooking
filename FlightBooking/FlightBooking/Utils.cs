@@ -10,7 +10,7 @@ namespace FlightBooking.Model
 	{
 		public static bool IsAirportInAfrica(string airportCode)
 		{
-			//for now they all are in africa
+			//for now they all are in Africa
 			return true;
 		}
 	}
